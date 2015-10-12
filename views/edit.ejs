@@ -1,0 +1,81 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Bloggg</title>
+    <script>
+        $(document).ready(function() { 
+            $(".editprofile").click(function(){
+                var id = ($(this).attr('userid'));
+                window.location.href= "/user/"+ id + "/edit";
+            });
+            
+            $(".savebutton").click(function(){
+                var id         = ($(this).attr('postid'));
+                var post_title = $("#post_title").val();
+                var author     = $("#author").val();
+                var authorid   = $("#authorid").val();
+                var body       = $("#body").val();
+
+                // ===== ajax to put
+                $.ajax({
+                    url: '/post/' + id + '?title=' + post_title + '&author=' + author + '&authorid=' + authorid + '&body=' + body,
+                    type: 'PUT',
+                    contentType:'application/json',
+                    data: JSON.stringify({id:id, title:post_title, userid: authorid, body:body})
+                }).done(function(msg){
+                    alert("Successfully updated post!");
+                    $( "#displayhere" ).append( "<p><strong>Successfully updated post!</strong></p>" );
+                    window.location.href= "/dashboard";
+                }).fail(function(xhr, status, err){
+                    alert("Error: " + xhr.responseText);
+                    window.location.href= "/error";
+                });
+            });
+            
+            $(".cancelbutton").click(function(){
+                window.location.href= "/dashboard";
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div class="heading">
+        <div id="blogtitle">Bloggg!</div>
+        <div id="user">Welcome, <%=result.author%> | <a href="/logout">logout</a></div>
+    </div>
+    <div class="container">
+        <div class="left">
+        <div class="hero-unit">
+            <div id="displayhere"></div>
+            <p>
+                <labelling>Update post</labelling>
+                <p align="left">
+                    Title: <input type="text" value="<%=result.title%>" name="post_title" id="post_title"></input><br/>
+                    Author: <input type="text" value="<%=user.firstName%>" name="author" id="author" disabled></input><br/>
+                    Author ID: <input type="text" value="<%=result.userid%>" name="authorid" id="authorid" disabled></input><br/>
+                    Text: <textarea name="body" id="body"><%= result.body%></textarea>
+                </p>
+                <p>
+                    <button class = "cancelbutton" type="submit">Cancel</button>
+                    <button class = "savebutton" type="submit" postid="<%= result.uuid%>">Save</button>
+                </p>
+            </p>
+        </div>
+        </div>
+        <div class="right">
+            <div id="nav">
+                <a href="/dashboard"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
+                <a href="/post"><i class="fa fa-sticky-note"></i>&nbsp;New Post</a>
+                <a class="editprofile" type="submit" userid="<%=user.uuid%>"><i class="fa fa-cogs"></i>&nbsp;Edit Profile</a>
+            </div>
+        </div> 
+    </div>
+    <div class="footer">
+        Bloggg. A micro-blogging site. Ima Balles
+    </div>
+    
+    <!--<script src = "js/bootstrap.min.js"></script>-->
+</body>
+</html>

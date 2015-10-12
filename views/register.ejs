@@ -1,0 +1,30 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Sign up | Bloggg</title>    
+</head>
+
+<body>
+    <div class="header">Bloggg!</div>
+    <div class="container">
+        <div class="hero-unit">
+            <form enctype="application/x-www-form-urlencoded" action="/register" id="regform" method="POST">
+                <div id="errors"><%=msg%></div>
+                <p>
+                    <input type="email" placeholder="Email" name="email" id="email"></input><br/>                    
+                    <input type="password" placeholder="Password" name="password" id="password"></input><br/>
+                    <input type="text" placeholder="First Name" name="firstName" id="firstName"></input><br/>
+                    <input type="text" placeholder="Last Name" name="lastName" id="lastName"></input><br/>
+                </p>
+                <p>
+                    <button type="submit" onclick="document.getElementbById('regform').submit();" href="javascript.void(0)" value="Submit">Sign-up</button>
+                </p>
+                <p>Already have an account? <a href="/login">Log-in.</a></p>
+            </form>   
+        </div>   
+    </div>
+    <div class="footer">
+		Bloggg. A micro-blogging site. Ima Balles
+	</div>
+</body>
+</html>

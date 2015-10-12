@@ -1,0 +1,82 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Home | Bloggg</title>
+
+    <script>
+        $(document).ready(function() {
+            $(".editbutton").click(function(){
+                var id = ($(this).attr('postid'));
+                window.location.href= "/post/"+ id + "/edit";
+            });
+
+            $(".editprofile").click(function(){
+                var id = ($(this).attr('userid'));
+                window.location.href= "/user/"+ id + "/edit";
+            });
+
+            $(".deletebutton").click(function(){
+                var id = ($(this).attr('postid'));
+                
+                // ===== ajax to delete
+                $.ajax({
+                    url: '/post/' + id,
+                    type: 'DELETE',
+                    contentType:'application/json',
+                    data: JSON.stringify({id:id})
+                }).done(function(msg){
+                    alert("Successfully deleted post!");
+                    $( "#displayhere" ).append( "<p><strong>Successfully deleted post!</strong></p>" );
+                    location.reload();
+                }).fail(function(xhr, status, err){
+                    alert("Status:" + status + " Error: " + err);
+                    alert("Err: " + xhr.responseText);
+                    window.location.href= "/error";
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="heading">
+      <div id="blogtitle">Bloggg!</div>
+      <div id="user">Welcome, <%=user.firstName%> | <a href="/logout"><i class="fa fa-sign-out"></i>Log-out</a></div>
+    </div>
+
+    <div class="container">
+        <div class="left">
+            <%for (var x=0; x<entry.length; x++) {%>
+                <div class="span9">
+                    <div class="span6">
+                        <div id="posttitle"><%=entry[x].title%></div>
+                        <div id="postauthor">by: <%=user.firstName%></div>
+                        <div id="postdate"><%=entry[x].updatedAt%></div>
+                        <div id="postbody"><%=entry[x].body%></div>
+                    </div>
+                    <div class="interact">
+                        <%if (user.uuid == entry[x].userid) {%>
+                        <ul>
+                            <li><button class="editbutton" type="submit" postid="<%=entry[x].uuid%>"><i class="fa fa-pencil"></i></button></li>
+                            <li><button class="deletebutton" type="submit" postid="<%=entry[x].uuid%>"><i class="fa fa-trash-o fa-lg"></i></button></li>
+                        </ul>
+                        <%}%>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+
+        <div class="right">
+            <div id="nav">
+                <a href="/dashboard"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
+                <a href="/post"><i class="fa fa-sticky-note"></i>&nbsp;New Post</a>
+                <a class="editprofile" type="submit" userid="<%=user.uuid%>"><i class="fa fa-cogs"></i>&nbsp;Edit Profile</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        Bloggg. A micro-blogging site. Ima Balles
+    </div>
+</body>
+</html>
+

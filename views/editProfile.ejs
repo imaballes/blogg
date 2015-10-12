@@ -1,0 +1,71 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Bloggg</title>
+    <script>
+        $(document).ready(function() {            
+            $(".savebutton").click(function(){
+                var id       = ($(this).attr('userid'));
+                var fname    = $("#first_name").val();
+                var lname    = $("#last_name").val();
+                var email    = $("#email").val();
+                var password = $("#password").val();
+
+                // ===== ajax to put
+                $.ajax({
+                    url: '/user/' + id + '?firstName=' + fname + '&lastName=' + lname + '&email=' + email + '&password=' + password,
+                    type: 'PUT',
+                    contentType:'application/json',
+                    data: JSON.stringify({id:id, firstName:fname, lastName:lname, email:email, password:password})
+                }).done(function(msg){
+                    alert("Successfully updated profile!");
+                    $( "#displayhere" ).append( "<p><strong>Successfully updated profile!</strong></p>" );
+                    window.location.href = "/dashboard";
+                    
+                }).fail(function(xhr, status, err){
+                    alert("Status:" + status + " Error: " + err);
+                    alert("Err: " + xhr.responseText);
+                    window.location.href= "/error";
+                });
+            });
+            
+            $(".cancelbutton").click(function(){
+                window.location.href= "/dashboard";
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+     <div class="heading">
+        <div id="blogtitle">Bloggg!</div>
+        <div id="user">Welcome, <%=user.firstName%> | <a href="/logout">logout</a></div>
+    </div>
+
+    <div class="container">
+        <div class="left">
+            <div class="hero-unit">
+                <div id="displayhere"></div>
+                <p>
+                    <labelling>Update User</labelling>
+                    <p align="left">
+                        First Name: <input type="text" value="<%=result.firstName%>" name="first_name" id="first_name"></input><br/>
+                        Last Name: <input type="text" value="<%=result.lastName%>" name="last_name" id="last_name" ></input><br/>
+                        Email: <input type="text" value="<%=result.email%>" name="email" id="email"></input><br/>
+                        Password: <input type="password" value="<%=result.password%>" name="password" id="password" ></input><br/>
+                    </p>
+                    <p>
+                        <button class = "savebutton" type="submit" userid="<%=user.uuid%>">Save</button>
+                        <button class = "cancelbutton" type="submit">Cancel</button>
+                    </p>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Bloggg. A micro-blogging site. Ima Balles
+    </div>
+</body>
+</html>

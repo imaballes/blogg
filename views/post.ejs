@@ -1,0 +1,60 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>New Post | Bloggg</title>
+    <script>
+        $(document).ready(function() { 
+            $(".editprofile").click(function(){
+                var id = ($(this).attr('userid'));
+                window.location.href= "/user/"+ id + "/edit";
+            });
+            
+            $(".cancelbutton").click(function(){
+                window.location.href= "/dashboard";
+            });
+
+        });
+    </script>    
+</head>
+
+<body>
+    <div class="heading">
+        <div id="blogtitle">Bloggg!</div>
+        <div id="user">Welcome, <%=user.firstName%> | <a href="/logout">logout</a></div>
+    </div>
+
+    <div class="container">
+    <div class="left">
+        <div class="hero-unit">
+            <form enctype="application/x-www-form-urlencoded" action="/post" id="regform" method="POST">
+                <p>
+                    <labelling>Create new post</labelling>
+                    <div id="errors"><%=msg%></div>
+                    <p>
+                    <input type="text" placeholder="Title" name="title" id="title"></input><br/>
+                    <textarea placeholder="Your post here.." name="body" id="body"></textarea>
+                    </p>
+                </p>
+                <p>
+                    <!--<button class="cancelbutton" type="submit">Cancel</button>-->
+                    <button class="savebutton" type="submit" onclick="document.getElementbById('regform').submit();" href="javascript.void(0)" value="Submit">Post</button>
+                </p>
+            </form> 
+            
+            
+              
+        </div>
+    </div>
+        <div class="right">
+            <div id="nav">
+                <a href="/dashboard"><i class="fa fa-home fa-fw"></i>&nbsp;Home</a>
+                <a class="editprofile" type="submit" userid="<%=user.uuid%>"><i class="fa fa-cogs"></i>&nbsp;Edit Profile</a>
+            </div>
+        </div> 
+    </div>
+    <div class="footer">
+        Bloggg. A micro-blogging site<br/>
+        Ima Balles. 2015
+    </div>
+</body>
+</html>
