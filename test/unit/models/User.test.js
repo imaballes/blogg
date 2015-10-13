@@ -10,6 +10,17 @@ describe(TEST_NAME, function() {
   });
 
   describe("***** user error validation *****", function() {
+    // UUID
+    describe("#uuid", function() {
+      it("is valid uuid", function(done) {
+        User.create(invalidUser, function(err, user) {
+          expect(user).to.not.exist;
+          expect(err).to.exist;
+          expect(err).to.validate("uuid", "required");
+        });
+        done();
+      });
+    });
 
     // EMAIl
     describe("#email", function() {
@@ -83,6 +94,7 @@ describe(TEST_NAME, function() {
 
   beforeEach(function() {
     validUser = {
+      uuid       : (1e4*(Date.now()+Math.random())).toString(16),
       email      : "feballes@voyagerinnovation.com",
       password   : "test123",
       first_name : "ima",
@@ -91,10 +103,22 @@ describe(TEST_NAME, function() {
   });
 
   describe("***** user success validation *****", function() {
+    // UUID
+    describe("#uuid", function() {
+      it("is valid uuid", function(done) {
+        User.create(validUser, function(err, user) {
+          expect(user).to.not.exist;
+          expect(err).to.exist;
+          expect(err).to.validate("uuid", "required");
+        });
+        done();
+      });
+    });
+
     // EMAIl
     describe("#email", function() {
       it("is valid email", function(done) {
-        User.create(invalidUser, function(err, user) {
+        User.create(validUser, function(err, user) {
           expect(user).to.exist;
           expect(err).to.not.exist;
           expect(err).to.validate("email", "email");
@@ -107,7 +131,7 @@ describe(TEST_NAME, function() {
     // PASSWORD
     describe("#password", function() {
       it("is required password", function(done) {
-        User.create(invalidUser, function(err, user) {
+        User.create(validUser, function(err, user) {
           expect(user).to.exist;
           expect(err).to.not.exist;
           expect(err).to.validate("password", "string");
@@ -158,68 +182,3 @@ describe(TEST_NAME, function() {
     });
   }); // END USER SUCCESS VALIDATION
 }); // END TEST_NAME
-
-
-// ===== EXTRAS ===== //
-/* EMAIL
-  it("should be a valid email address", function(done) {
-  User.create({}, function(err, user) {
-    expect(user).to.not.exist;
-    expect(err).to.exist;
-    console.log("\n===========");
-    console.log(err.invalidAttributes);
-    console.log("===========\n");
-
-    expect(err).to.have.deep.property("invalidAttributes.email")
-      .that.is.an("array")
-      .that.satisfy(function(rules) {
-        return _.find(rules, {rule: "email"});
-      });
-    done();
-  });
-});
-
-it("is required", function(done) {
-  validUser.email    = null;
-  validUser.password = null;
-  User.create(validUser, function(err, user) {
-  //User.create({}, function(err, user) {
-    expect(user).to.not.exist;
-    expect(err).to.exist;
-    expect(err).to.have.deep.property("invalidAttributes.email")
-      .that.is.an("array")
-      .that.satisfy(function(rules) {
-        return _.find(rules, {rule: "required"});
-      });
-    done();
-  });
-});
-});*/
-
-/* PASSWORD
-  it("should be a string", function(done) {
-  User.create({}, function(err, user) {
-    expect(user).to.not.exist;
-    expect(err).to.exist;
-    expect(err).to.have.deep.property("invalidAttributes.password")
-      .that.is.an("array")
-      .that.satisfy(function(rules) {
-        return _.find(rules, {rule: "string"});
-      });
-    done();
-  });
-});
-
-it("is required", function(done) {
-  User.create({}, function(err, user) {
-    expect(user).to.not.exist;
-    expect(err).to.exist;
-    expect(err).to.have.deep.property("invalidAttributes.email")
-      .that.is.an("array")
-      .that.satisfy(function(rules) {
-        return _.find(rules, {rule: "required"});
-      });
-    done();
-  });
-});
-*/

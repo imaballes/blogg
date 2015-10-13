@@ -3,7 +3,7 @@
 <head>
     <title>Bloggg</title>
     <script>
-        $(document).ready(function() {            
+        $(document).ready(function() {
             $(".savebutton").click(function(){
                 var id       = ($(this).attr('userid'));
                 var fname    = $("#first_name").val();
@@ -21,14 +21,14 @@
                     alert("Successfully updated profile!");
                     $( "#displayhere" ).append( "<p><strong>Successfully updated profile!</strong></p>" );
                     window.location.href = "/dashboard";
-                    
+
                 }).fail(function(xhr, status, err){
                     alert("Status:" + status + " Error: " + err);
                     alert("Err: " + xhr.responseText);
                     window.location.href= "/error";
                 });
             });
-            
+
             $(".cancelbutton").click(function(){
                 window.location.href= "/dashboard";
             });

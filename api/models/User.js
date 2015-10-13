@@ -10,11 +10,11 @@ var User = {
 	schema     : true,
 	tableName  : "users",
 	attributes : {
-		/*uuid: {
+		uuid: {
 			type:"string",
 			primaryKey: true,
 			required:true
-		},*/
+		},
 
 		email: {
 			type: "email",

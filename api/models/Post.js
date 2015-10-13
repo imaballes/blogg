@@ -6,16 +6,30 @@
 */
 
 var Post = {
-    connection: 'BlogMongodbServer',
-    schema: true,
-    tableName: 'posts',
-    attributes: {
-        uuid      : {type:'string', primaryKey: true, required:true},
-        title     : {type:'string', required: true},
-        body      : 'string',
-        author    : 'string',
-        userid    : 'string'
-    }
+  connection : "BlogMongodbServer",
+  schema     : true,
+  tableName  : "posts",
+  attributes : {
+      uuid: {
+        primaryKey: true,
+        type:"string",
+        required:true
+      },
+
+      title: {
+        type:"string",
+        required: true
+      },
+
+      userid : {
+        type:"string",
+        required: true
+      },
+      
+      body   : "string",
+      author : "string",
+
+  }
 };
 
 module.exports = Post;
