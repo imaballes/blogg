@@ -35,7 +35,7 @@ var UserController = {
         else {
           //console.log("Welcome, " + entry.first_name + "!");
           //set session variables & re-direct
-          sesh.firstName = entry.first_name;
+          sesh.first_name = entry.first_name;
           sesh.email     = entry.email;
           sesh.uuid      = entry.uuid;
           //console.log(sesh);
@@ -58,8 +58,8 @@ var UserController = {
 
   processRegister : function(req, res) {
     if (req.body.email == "" || req.body.first_name == "" || req.body.last_name == "" || req.body.password == "") {
-        var err_msg = "Please fill-up all fields.";
-        res.view("register", {msg:err_msg});
+      var err_msg = "Please fill-up all fields.";
+      res.view("register", {msg:err_msg});
     }
     else {
       var user   = req.body;
@@ -83,8 +83,8 @@ var UserController = {
 
   getUser: function(req, res) {
     if (!req.session.email) {
-        res.redirect("login");
-        return;
+      res.redirect("login");
+      return;
     }
 
     var params = {uuid:req.params.id};
@@ -96,8 +96,8 @@ var UserController = {
         res.notFound();
       }
       else {
-          console.log(entry);
-          res.view("editProfile", {result:entry, user:req.session});
+        console.log(entry);
+        res.view("editProfile", {result:entry, user:req.session});
       }
     });
   },
@@ -109,8 +109,8 @@ var UserController = {
 
     User.update(params, query, function(err, result) {
       if (err || !result) {
-          console.log("Error updating user..");
-          console.log(err);
+        console.log("Error updating user..");
+        console.log(err);
       }
       else {
         console.log("User updated!");

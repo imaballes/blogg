@@ -3,12 +3,12 @@
 <head>
     <title>Bloggg</title>
     <script>
-        $(document).ready(function() { 
+        $(document).ready(function() {
             $(".editprofile").click(function(){
                 var id = ($(this).attr('userid'));
                 window.location.href= "/user/"+ id + "/edit";
             });
-            
+
             $(".savebutton").click(function(){
                 var id         = ($(this).attr('postid'));
                 var post_title = $("#post_title").val();
@@ -18,20 +18,20 @@
 
                 // ===== ajax to put
                 $.ajax({
-                    url: '/post/' + id + '?title=' + post_title + '&author=' + author + '&authorid=' + authorid + '&body=' + body,
-                    type: 'PUT',
+                    url        : '/post/' + id + '?title=' + post_title + '&author=' + author + '&authorid=' + authorid + '&body=' + body,
+                    type       : 'PUT',
                     contentType:'application/json',
-                    data: JSON.stringify({id:id, title:post_title, userid: authorid, body:body})
+                    data       : JSON.stringify({id:id, title:post_title, userid: authorid, body:body})
                 }).done(function(msg){
                     alert("Successfully updated post!");
                     $( "#displayhere" ).append( "<p><strong>Successfully updated post!</strong></p>" );
-                    window.location.href= "/dashboard";
+                    window.location.href = "/dashboard";
                 }).fail(function(xhr, status, err){
                     alert("Error: " + xhr.responseText);
-                    window.location.href= "/error";
+                    window.location.href = "/error";
                 });
             });
-            
+
             $(".cancelbutton").click(function(){
                 window.location.href= "/dashboard";
             });
@@ -70,12 +70,12 @@
                 <a href="/post"><i class="fa fa-sticky-note"></i>&nbsp;New Post</a>
                 <a class="editprofile" type="submit" userid="<%=user.uuid%>"><i class="fa fa-cogs"></i>&nbsp;Edit Profile</a>
             </div>
-        </div> 
+        </div>
     </div>
     <div class="footer">
         Bloggg. A micro-blogging site. Ima Balles
     </div>
-    
+
     <!--<script src = "js/bootstrap.min.js"></script>-->
 </body>
 </html>
