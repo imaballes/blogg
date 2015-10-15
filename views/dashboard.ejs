@@ -17,7 +17,7 @@
 
             $(".deletebutton").click(function(){
                 var id = ($(this).attr('postid'));
-                
+
                 // ===== ajax to delete
                 $.ajax({
                     url: '/post/' + id,
@@ -41,7 +41,7 @@
 <body>
     <div class="heading">
       <div id="blogtitle">Bloggg!</div>
-      <div id="user">Welcome, <%=user.firstName%> | <a href="/logout"><i class="fa fa-sign-out"></i>Log-out</a></div>
+      <div id="user">Welcome, <%=user.first_name%> | <a href="/logout"><i class="fa fa-sign-out"></i>Log-out</a></div>
     </div>
 
     <div class="container">
@@ -50,7 +50,13 @@
                 <div class="span9">
                     <div class="span6">
                         <div id="posttitle"><%=entry[x].title%></div>
-                        <div id="postauthor">by: <%=user.firstName%></div>
+
+                        <%if (user.uuid == entry[x].userid) {%>
+                          <div id="postauthor">by: <%=user.first_name%></div>
+                        <%} else {%>
+                          <div id="postauthor">by: <%=entry[x].author%></div>
+                        <%}%>
+
                         <div id="postdate"><%=entry[x].updatedAt%></div>
                         <div id="postbody"><%=entry[x].body%></div>
                     </div>
@@ -79,4 +85,3 @@
     </div>
 </body>
 </html>
-
