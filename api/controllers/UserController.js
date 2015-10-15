@@ -97,7 +97,7 @@ var UserController = {
       }
       else {
         console.log(entry);
-        res.view("editProfile", {result:entry, user:req.session});
+        res.view("editProfile", {result:entry, user:req.session, msg:""});
       }
     });
   },
@@ -109,8 +109,9 @@ var UserController = {
 
     User.update(params, query, function(err, result) {
       if (err || !result) {
-        console.log("Error updating user..");
-        console.log(err);
+        var err_msg = "All fields are required. Please try again.";
+        console.log(err_msg);
+        res.json(500, {err:err_msg});
       }
       else {
         console.log("User updated!");
@@ -118,7 +119,7 @@ var UserController = {
 
         //setting updated session values
         var sesh = req.session;
-        sesh.firstName = q.firstName;
+        sesh.first_name = q.first_name;
         sesh.email = q.email;
 
         res.send("Successfully updated record!");

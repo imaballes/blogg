@@ -9,7 +9,7 @@ var PostController = {
 	dashboard: function(req, res) {
     if (!req.session.email){
       res.redirect('login');
-			return;
+			//return;
     }
 
     Post.find(function(err, posts) {
@@ -37,20 +37,20 @@ var PostController = {
   createPost: function(req, res) {
     var post    = req.body;
     var postid  = (1e4*(Date.now()+Math.random())).toString(16);
-    //post.uuid   = postid;
-		post.uuid   = req.body.id;
+    post.uuid   = postid;
+		//post.uuid   = req.body.id;
 		post.userid = req.session.uuid;
     post.author = req.session.first_name;
     console.log(post);
 
     Post.create(post, function(err, entry){
-  	if (err) {
-          console.log("Posting error?!");
-          var err_msg = "Oops! Something went wrong. Please try again.";
-          res.view('post', {user:req.session, msg:err_msg});
-      }
+	  	if (err) {
+	      console.log("Posting error?!");
+	      var err_msg = "Oops! Something went wrong. Please try again.";
+	      res.view('post', {user:req.session, msg:err_msg});
+	    }
       else {
-          res.redirect('dashboard');
+        res.redirect('dashboard');
       }
     });
   },
@@ -69,6 +69,7 @@ var PostController = {
       if (err || !entry) {
           console.log("ERROR:: Post not existing");
           console.log(err.message);
+					return;
       }
       else {
           console.log("+++++");
@@ -86,9 +87,10 @@ var PostController = {
 
     Post.update(params, query, function(err, result) {
       if (err || !result) {
-        callback_data = {msg:"Error updating post.."};
-        console.log(callback_data);
         console.log(err);
+				var err_msg = "Please add a title.";
+        console.log(err_msg);
+        res.json(500, {err:err_msg});
       }
       else {
         callback_data = {msg:"ID: " + req.params.id + ", updated successfully!"};

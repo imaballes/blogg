@@ -27,8 +27,8 @@
                     $( "#displayhere" ).append( "<p><strong>Successfully updated post!</strong></p>" );
                     window.location.href = "/dashboard";
                 }).fail(function(xhr, status, err){
-                    alert("Error: " + xhr.responseText);
-                    window.location.href = "/error";
+                    var errObj = JSON.parse(xhr.responseText);
+                    $( "#errors" ).append(errObj.err);
                 });
             });
 
@@ -49,11 +49,12 @@
         <div class="left">
         <div class="hero-unit">
             <div id="displayhere"></div>
+            <div id="errors"></div>
             <p>
                 <labelling>Update post</labelling>
                 <p align="left">
                     Title: <input type="text" value="<%=result.title%>" name="post_title" id="post_title"></input><br/>
-                    Author: <input type="text" value="<%=user.firstName%>" name="author" id="author" disabled></input><br/>
+                    Author: <input type="text" value="<%=user.first_name%>" name="author" id="author" disabled></input><br/>
                     Author ID: <input type="text" value="<%=result.userid%>" name="authorid" id="authorid" disabled></input><br/>
                     Text: <textarea name="body" id="body"><%= result.body%></textarea>
                 </p>
