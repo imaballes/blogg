@@ -75,17 +75,34 @@ describe(TEST_NAME, function() {
   });
 
   //EDIT POST BY ID
-  describe("PUT post", function() {
+  describe("PUT post by id", function() {
     it("should be successful post edit [200]", function(done) {
       var post  = factory.build("edit_post");
       var query = "?title=" + post.title + "&author=" + post.author + "&authorid=" + post.authorid + "&body=" + post.body
-      console.log(query);
       expect(post).to.exist;
 
       request.put("/post/"+post.id+query)
         .send(post)
         .expect(200)
         .end(function(err, res) {
+          expect(err).to.not.exist;
+          done();
+        });
+    });
+  });
+
+  //EDIT POST BY ID (EXPECT ERROR)
+  describe("PUT post by id", function() {
+    it("should be successful edit error [500]", function(done) {
+      var post  = factory.build("error_post");
+      var query = "?title=" + post.title + "&author=" + post.author + "&authorid=" + post.authorid + "&body=" + post.body
+      expect(post).to.exist;
+
+      request.put("/post/"+post.id+query)
+        .send(post)
+        .expect(500)
+        .end(function(err, res) {
+          console.log(res.status);
           expect(err).to.not.exist;
           done();
         });
@@ -104,6 +121,32 @@ describe(TEST_NAME, function() {
           expect(err).to.not.exist;
           done();
         });
+    });
+  });
+
+  //DESTROY SESSION
+  describe("GET logout", function() {
+    it("should be successful logout [302]", function(done) {
+      request.get("/logout")
+      .expect(302)
+      .end(function(err, res) {
+        expect(err).to.not.exist;
+        expect(res.headers.location).to.eql("/login");
+        console.log("REDIRECT TO: " + res.headers.location);
+        done();
+       });
+    });
+  });
+
+  //404 -- NON-EXISTING ROUTE
+  describe("GET route error post", function() {
+    it("should be successful errcatch [404]", function(done) {
+      request.get("/error_post")
+      .expect(404)
+      .end(function(err, res) {
+         expect(err).to.not.exist;
+         done();
+       });
     });
   });
 });

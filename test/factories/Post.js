@@ -13,4 +13,11 @@ module.exports = function(factory) {
     .attr("body", "Updated sample body here yo!")
     .attr("author", "ima")
     .attr("authorid", "3353ad9375e28a");
+
+    factory.define("error_post")
+      .attr("id", "1")
+      .attr("title", "")
+      .attr("body", "Updated sample body here yo!")
+      .attr("author", "ima")
+      .attr("authorid", "3353ad9375e28a");
 }

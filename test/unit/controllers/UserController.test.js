@@ -80,7 +80,7 @@ describe(TEST_NAME, function() {
   });
 
   //EDIT USER BY ID
-  describe("EDIT user by id", function() {
+  describe("PUT user by id", function() {
     it("should be successful user update [200]", function(done) {
       var user  = factory.build("edit_user");
       var query = "?first_name="+user.first_name+"&last_name="+user.last_name+"&email="+user.email+"&password="+user.password
@@ -93,6 +93,24 @@ describe(TEST_NAME, function() {
         expect(err).to.not.exist;
         done();
       });
+    });
+  });
+
+  //EDIT POST BY ID (EXPECT ERROR)
+  describe("PUT user by id", function() {
+    it("should be successful edit error [500]", function(done) {
+      var user  = factory.build("error_post");
+      var query = "?first_name="+user.first_name+"&last_name="+user.last_name+"&email="+user.email+"&password="+user.password
+      expect(user).to.exist;
+
+      request.put("/user/"+user.id+query)
+        .send(user)
+        .expect(500)
+        .end(function(err, res) {
+          console.log(res.status);
+          expect(err).to.not.exist;
+          done();
+        });
     });
   });
 
@@ -124,10 +142,10 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //SAMPLE 404 -- NON-EXISTING ROUTE
-  describe("GET logout error", function() {
+  //404 -- NON-EXISTING ROUTE
+  describe("GET route error user", function() {
     it("should be successful errcatch [404]", function(done) {
-      request.get("/error_route")
+      request.get("/error_user")
       .expect(404)
       .end(function(err, res) {
          expect(err).to.not.exist;
