@@ -60,22 +60,14 @@ var PostController = {
       res.redirect('login');
 			return;
     }
-
-    console.log("Getting post by id....");
-    console.log(req.params);
     var params = {uuid:req.params.id};
 
     Post.findOne(params, function(err, entry){
       if (err || !entry) {
-          console.log("ERROR:: Post not existing");
-          console.log(err.message);
-					return;
+				return;
       }
       else {
-          console.log("+++++");
-          console.log(entry);
-          console.log("+++++");
-          res.view('edit', {result: entry, user:req.session});
+        res.view('edit', {result: entry, user:req.session});
       }
     });
   },
@@ -88,12 +80,10 @@ var PostController = {
     Post.update(params, query, function(err, result) {
       if (err || !result) {
 				var err_msg = "Please add a title.";
-        console.log(err_msg);
         res.json(500, {err:err_msg});
       }
       else {
         callback_data = {msg:"ID: " + req.params.id + ", updated successfully!"};
-        console.log(result);
         res.send("Successfully updated record!");
       }
     });
@@ -106,6 +96,7 @@ var PostController = {
       if (err || !result){
         callback_msg = "Post not existing..";
         console.log(callback_msg);
+				res.notFound();
       }
       else {
         Post.destroy(params, function(err, deleted){

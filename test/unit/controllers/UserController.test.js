@@ -84,8 +84,6 @@ describe(TEST_NAME, function() {
     it("should be successful user update [200]", function(done) {
       var user  = factory.build("edit_user");
       var query = "?first_name="+user.first_name+"&last_name="+user.last_name+"&email="+user.email+"&password="+user.password
-      console.log(query);
-      console.log("++++++\n");
       expect(user).to.exist;
 
       request.put("/user/"+user.id+query)

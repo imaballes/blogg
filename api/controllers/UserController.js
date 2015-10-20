@@ -30,17 +30,12 @@ var UserController = {
       User.findOne(obj, function(err, entry) {
         if (err || entry == null) {
           var err_msg = "Invalid login. Please try again.";
-          console.log(err_msg);
           res.view("login", {msg:err_msg});
         }
         else {
-          console.log("LOGGED IN! ----");
-          //console.log("Welcome, " + entry.first_name + "!");
-          //set session variables & re-direct
           sesh.first_name = entry.first_name;
           sesh.email     = entry.email;
           sesh.uuid      = entry.uuid;
-          //console.log(sesh);
           res.redirect("dashboard");
         }
       });
@@ -72,7 +67,6 @@ var UserController = {
 
       User.create(user, function(err, entry) {
         if (err) {
-          console.log(err);
           var err_msg = "Oops! Something went wrong. Please try again.";
           res.view("register", {msg:err_msg});
         }
@@ -95,7 +89,6 @@ var UserController = {
     User.findOne(params, function(err, entry){
       if (err || !entry) {
         console.log("ERROR:: User not existing");
-        console.log(err.message);
         res.notFound();
       }
       else {
@@ -107,24 +100,16 @@ var UserController = {
 
   editUser: function(req, res) {
     var params = {uuid:req.params.id};
-    console.log(params); //uuid
-    console.log("\n-------");
-
     var q      = req.query;
     var query  = {"email":q.email, "password":q.password, "first_name":q.first_name, "last_name":q.last_name};
-    console.log(query);
 
     User.update(params, query, function(err, result) {
       if (err || !result) {
         //console.log(err);
         var err_msg = "All fields are required. Please try again.";
-        console.log(err_msg);
         res.json(500, {err:err_msg});
       }
       else {
-        console.log("User updated!");
-        console.log(result);
-
         //setting updated session values
         var sesh = req.session;
         sesh.first_name = q.first_name;

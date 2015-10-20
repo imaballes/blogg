@@ -81,9 +81,6 @@ describe(TEST_NAME, function() {
         Post.create(invalidPost, function(err, post) {
           expect(err).to.exist;
           expect(post).to.not.exist;
-          //console.log("\n===== ERROR =====");
-          //console.log(err.invalidAttributes);
-          //console.log("===========\n");
         });
         done();
       });
@@ -95,9 +92,9 @@ describe(TEST_NAME, function() {
 
   beforeEach(function() {
     validPost = {
-      uuid   : "12345",//(1e4*(Date.now()+Math.random())).toString(16),
+      uuid   : "12345",
       title  : "Sample Post",
-      userid : "1234567890", //(1e4*(Date.now()+Math.random())).toString(16),
+      userid : "1234567890",
       body   : "Sample body hahahahha",
       author : "ima balles"
     };
@@ -110,8 +107,6 @@ describe(TEST_NAME, function() {
         Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          //expect(err).to.validate("uuid", "string");
-          //expect(err).to.validate("uuid", "required");
         });
         done();
       });
@@ -123,8 +118,6 @@ describe(TEST_NAME, function() {
         Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          //expect(err).to.validate("title", "string");
-          //expect(err).to.validate("title", "required");
         });
         done();
       });
@@ -136,8 +129,6 @@ describe(TEST_NAME, function() {
         Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          //expect(err).to.validate("userid", "string");
-          //expect(err).to.validate("userid", "required");
         });
         done();
       });
@@ -149,8 +140,6 @@ describe(TEST_NAME, function() {
         Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          //expect(err).to.validate("body", "string");
-          //expect(err).to.validate("body", "required");
         });
         done();
       });
@@ -162,8 +151,6 @@ describe(TEST_NAME, function() {
         Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          //expect(err).to.validate("author", "string");
-          //expect(err).to.validate("author", "required");
         });
         done();
       });
