@@ -2,10 +2,10 @@ require("sails-test-helper");
 
 describe(TEST_NAME, function() {
   var user = {
-    email      : "ima@yahoo.com",
-    password   : "ima123",
+    email      : "imatest@yahoo.com",
+    password   : "imatest123",
     uuid       : "3353ad9375e28a",
-    first_name : "ima"
+    first_name : "imatest"
   };
 
   before(function(done) {
@@ -102,7 +102,6 @@ describe(TEST_NAME, function() {
         .send(post)
         .expect(500)
         .end(function(err, res) {
-          console.log(res.status);
           expect(err).to.not.exist;
           done();
         });

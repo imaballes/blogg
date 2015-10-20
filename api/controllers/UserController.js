@@ -30,9 +30,11 @@ var UserController = {
       User.findOne(obj, function(err, entry) {
         if (err || entry == null) {
           var err_msg = "Invalid login. Please try again.";
+          console.log(err_msg);
           res.view("login", {msg:err_msg});
         }
         else {
+          console.log("LOGGED IN! ----");
           //console.log("Welcome, " + entry.first_name + "!");
           //set session variables & re-direct
           sesh.first_name = entry.first_name;
@@ -64,7 +66,8 @@ var UserController = {
     else {
       var user   = req.body;
       var userid = (1e4*(Date.now()+Math.random())).toString(16);
-      user.uuid  = userid;
+      //user.uuid  = userid;
+      user.uuid   = req.body.id;
       console.log(user);
 
       User.create(user, function(err, entry) {
@@ -104,11 +107,16 @@ var UserController = {
 
   editUser: function(req, res) {
     var params = {uuid:req.params.id};
+    console.log(params); //uuid
+    console.log("\n-------");
+
     var q      = req.query;
     var query  = {"email":q.email, "password":q.password, "first_name":q.first_name, "last_name":q.last_name};
+    console.log(query);
 
     User.update(params, query, function(err, result) {
       if (err || !result) {
+        //console.log(err);
         var err_msg = "All fields are required. Please try again.";
         console.log(err_msg);
         res.json(500, {err:err_msg});

@@ -37,8 +37,8 @@ var PostController = {
   createPost: function(req, res) {
     var post    = req.body;
     var postid  = (1e4*(Date.now()+Math.random())).toString(16);
-    post.uuid   = postid;
-		//post.uuid   = req.body.id;
+    //post.uuid   = postid;
+		post.uuid   = req.body.id;
 		post.userid = req.session.uuid;
     post.author = req.session.first_name;
     console.log(post);
@@ -87,7 +87,6 @@ var PostController = {
 
     Post.update(params, query, function(err, result) {
       if (err || !result) {
-        console.log(err);
 				var err_msg = "Please add a title.";
         console.log(err_msg);
         res.json(500, {err:err_msg});

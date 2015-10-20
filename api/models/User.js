@@ -6,14 +6,12 @@
 */
 
 var User = {
-	connection : "BlogMongodbServer",
-	schema     : true,
 	tableName  : "users",
 	attributes : {
 		uuid: {
 			type:"string",
 			primaryKey: true,
-			required:true
+			required: true
 		},
 
 		email: {

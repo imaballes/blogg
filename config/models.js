@@ -17,9 +17,9 @@ module.exports.models = {
   * connections (see `config/connections.js`)                                *
   *                                                                          *
   ***************************************************************************/
-  //connection: 'BlogMongodbServer',
-  connection: 'master',
-  migrate: 'safe',
+  connection  : 'master',
+  schema      : true,
+  migrate     : 'safe',
 
   /***************************************************************************
   *                                                                          *
@@ -29,5 +29,5 @@ module.exports.models = {
   * See http://sailsjs.org/#/documentation/concepts/ORM/model-settings.html  *
   *                                                                          *
   ***************************************************************************/
-  autoPK  : false,
+  // autoPK  : false,
 };

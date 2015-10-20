@@ -12,7 +12,7 @@ describe(TEST_NAME, function() {
   describe("***** user error validation *****", function() {
     // UUID
     describe("#uuid", function() {
-      it("is valid uuid", function(done) {
+      it("is invalid uuid", function(done) {
         User.create(invalidUser, function(err, user) {
           expect(user).to.not.exist;
           expect(err).to.exist;
@@ -24,7 +24,7 @@ describe(TEST_NAME, function() {
 
     // EMAIl
     describe("#email", function() {
-      it("is valid email", function(done) {
+      it("is invalid email", function(done) {
         User.create(invalidUser, function(err, user) {
           expect(user).to.not.exist;
           expect(err).to.exist;
@@ -37,7 +37,7 @@ describe(TEST_NAME, function() {
 
     // PASSWORD
     describe("#password", function() {
-      it("is required password", function(done) {
+      it("is missing password", function(done) {
         User.create(invalidUser, function(err, user) {
           expect(user).to.not.exist;
           expect(err).to.exist;
@@ -50,7 +50,7 @@ describe(TEST_NAME, function() {
 
     // FIRST_NAME
     describe("#first_name", function() {
-      it("is valid first_name", function(done) {
+      it("is invalid first_name", function(done) {
         User.create(invalidUser, function(err, user) {
           expect(user).to.not.exist;
           expect(err).to.exist;
@@ -63,7 +63,7 @@ describe(TEST_NAME, function() {
 
     // LAST_NAME
     describe("#Last_name", function() {
-      it("is valid last_name", function(done) {
+      it("is invalid last_name", function(done) {
         User.create(invalidUser, function(err, user) {
           expect(user).to.not.exist;
           expect(err).to.exist;
@@ -76,13 +76,10 @@ describe(TEST_NAME, function() {
 
     // CREATE USER
     describe(".create()", function() {
-      it("should be successful", function(done) {
+      it("should be user creation error", function(done) {
         User.create(invalidUser, function(err, user) {
           expect(err).to.exist;
           expect(user).to.not.exist;
-          console.log("\n===== ERROR =====");
-          console.log(err.invalidAttributes);
-          console.log("===========\n");
         });
         done();
       });
@@ -95,12 +92,12 @@ describe(TEST_NAME, function() {
   beforeEach(function() {
     validUser = {
       uuid       : (1e4*(Date.now()+Math.random())).toString(16),
-      email      : "feballes@voyagerinnovation.com",
+      email      : "test@voyagerinnovation.com",
       password   : "test123",
-      first_name : "ima",
+      first_name : "test_ima",
       last_name  : "balles"
     };
-  });
+  }); // created 6x test@voyagerinnovation.com
 
   describe("***** user success validation *****", function() {
     // UUID
@@ -155,7 +152,7 @@ describe(TEST_NAME, function() {
     });
 
     // LAST_NAME
-    describe("#Last_name", function() {
+    describe("#last_name", function() {
       it("is valid last_name", function(done) {
         User.create(validUser, function(err, user) {
           expect(user).to.not.exist;
@@ -169,7 +166,7 @@ describe(TEST_NAME, function() {
 
     // CREATE USER
     describe(".create()", function() {
-      it("should be successful", function(done) {
+      it("should be successful user creation", function(done) {
         User.create(validUser, function(err, user) {
           expect(err).to.not.exist;
           expect(user).to.exist;

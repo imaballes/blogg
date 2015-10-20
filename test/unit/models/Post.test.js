@@ -12,10 +12,11 @@ describe(TEST_NAME, function() {
   describe("***** post error validation *****", function() {
     // UUID
     describe("#uuid", function() {
-      it("is valid uuid", function(done) {
+      it("is invalid uuid", function(done) {
         Post.create(invalidPost, function(err, post) {
           expect(post).to.not.exist;
           expect(err).to.exist;
+          expect(err).to.validate("uuid", "string");
           expect(err).to.validate("uuid", "required");
         });
         done();
@@ -24,8 +25,8 @@ describe(TEST_NAME, function() {
 
     // TITLE
     describe("#title", function() {
-      it("is required title", function(done) {
-        User.create(invalidPost, function(err, post) {
+      it("is missing title", function(done) {
+        Post.create(invalidPost, function(err, post) {
           expect(post).to.not.exist;
           expect(err).to.exist;
           expect(err).to.validate("title", "string");
@@ -37,8 +38,8 @@ describe(TEST_NAME, function() {
 
     // USERID
     describe("#userid", function() {
-      it("is required userid", function(done) {
-        User.create(invalidPost, function(err, post) {
+      it("is missing userid", function(done) {
+        Post.create(invalidPost, function(err, post) {
           expect(post).to.not.exist;
           expect(err).to.exist;
           expect(err).to.validate("userid", "string");
@@ -50,11 +51,12 @@ describe(TEST_NAME, function() {
 
     // BODY
     describe("#body", function() {
-      it("is valid body", function(done) {
-        User.create(invalidPost, function(err, post) {
+      it("is invalid body", function(done) {
+        Post.create(invalidPost, function(err, post) {
           expect(post).to.not.exist;
           expect(err).to.exist;
           expect(err).to.validate("body", "string");
+          expect(err).to.validate("body", "required");
         });
         done();
       });
@@ -62,11 +64,12 @@ describe(TEST_NAME, function() {
 
     // LAST_NAME
     describe("#author", function() {
-      it("is valid author", function(done) {
-        User.create(invalidPost, function(err, post) {
+      it("is invalid author", function(done) {
+        Post.create(invalidPost, function(err, post) {
           expect(post).to.not.exist;
           expect(err).to.exist;
           expect(err).to.validate("author", "string");
+          expect(err).to.validate("author", "required");
         });
         done();
       });
@@ -75,12 +78,12 @@ describe(TEST_NAME, function() {
     // CREATE POST
     describe(".create()", function() {
       it("should be successful invalid post", function(done) {
-        User.create(invalidPost, function(err, post) {
+        Post.create(invalidPost, function(err, post) {
           expect(err).to.exist;
           expect(post).to.not.exist;
-          console.log("\n===== ERROR =====");
-          console.log(err.invalidAttributes);
-          console.log("===========\n");
+          //console.log("\n===== ERROR =====");
+          //console.log(err.invalidAttributes);
+          //console.log("===========\n");
         });
         done();
       });
@@ -92,9 +95,9 @@ describe(TEST_NAME, function() {
 
   beforeEach(function() {
     validPost = {
-      uuid   : (1e4*(Date.now()+Math.random())).toString(16),
+      uuid   : "12345",//(1e4*(Date.now()+Math.random())).toString(16),
       title  : "Sample Post",
-      userid : (1e4*(Date.now()+Math.random())).toString(16),
+      userid : "1234567890", //(1e4*(Date.now()+Math.random())).toString(16),
       body   : "Sample body hahahahha",
       author : "ima balles"
     };
@@ -105,9 +108,10 @@ describe(TEST_NAME, function() {
     describe("#uuid", function() {
       it("is valid uuid", function(done) {
         Post.create(validPost, function(err, post) {
-          expect(post).to.not.exist;
-          expect(err).to.exist;
-          expect(err).to.validate("uuid", "required");
+          expect(post).to.exist;
+          expect(err).to.not.exist;
+          //expect(err).to.validate("uuid", "string");
+          //expect(err).to.validate("uuid", "required");
         });
         done();
       });
@@ -116,11 +120,11 @@ describe(TEST_NAME, function() {
     // TITLE
     describe("#title", function() {
       it("is required title", function(done) {
-        User.create(validPost, function(err, post) {
+        Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          expect(err).to.validate("title", "string");
-          expect(err).to.validate("title", "required");
+          //expect(err).to.validate("title", "string");
+          //expect(err).to.validate("title", "required");
         });
         done();
       });
@@ -129,11 +133,11 @@ describe(TEST_NAME, function() {
     // USERID
     describe("#userid", function() {
       it("is required userid", function(done) {
-        User.create(validPost, function(err, post) {
+        Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          expect(err).to.validate("userid", "string");
-          expect(err).to.validate("userid", "required");
+          //expect(err).to.validate("userid", "string");
+          //expect(err).to.validate("userid", "required");
         });
         done();
       });
@@ -142,10 +146,11 @@ describe(TEST_NAME, function() {
     // BODY
     describe("#body", function() {
       it("is valid body", function(done) {
-        User.create(validPost, function(err, post) {
+        Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          expect(err).to.validate("body", "string");
+          //expect(err).to.validate("body", "string");
+          //expect(err).to.validate("body", "required");
         });
         done();
       });
@@ -154,10 +159,11 @@ describe(TEST_NAME, function() {
     // LAST_NAME
     describe("#author", function() {
       it("is valid author", function(done) {
-        User.create(validPost, function(err, post) {
+        Post.create(validPost, function(err, post) {
           expect(post).to.exist;
           expect(err).to.not.exist;
-          expect(err).to.validate("author", "string");
+          //expect(err).to.validate("author", "string");
+          //expect(err).to.validate("author", "required");
         });
         done();
       });
@@ -165,10 +171,10 @@ describe(TEST_NAME, function() {
 
     // CREATE POST
     describe(".create()", function() {
-      it("should be successful valid post", function(done) {
+      it("should be successful post", function(done) {
         Post.create(validPost, function(err, post) {
-          expect(err).to.not.exist;
           expect(post).to.exist;
+          expect(err).to.not.exist;
           console.log("\n===== POST =====");
           console.log(post);
           console.log("===========\n");

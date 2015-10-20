@@ -5,7 +5,7 @@ describe(TEST_NAME, function() {
     console.log("\n=========\n");
   });
 
-  //VIEW LOGIN
+  // VIEW LOGIN
   describe("GET login", function() {
     it("should be successful login view [200]", function(done) {
       request.get("/")
@@ -17,7 +17,7 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //REGISTER
+  // REGISTER
   describe("GET register", function() {
     it("should be successful signup view [200]", function(done) {
       request.get("/register")
@@ -29,7 +29,7 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //PROCESS REGISTER
+  // PROCESS REGISTER
   describe("POST register", function() {
     it("should be successful signup [200]", function(done) {
       var user = factory.build("user");
@@ -45,7 +45,7 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //PROCESS LOGIN
+  // PROCESS LOGIN
   describe("POST login", function() {
     it("should be successful login [302]", function(done) {
       var user = factory.build("user");
@@ -63,7 +63,7 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //QUERY USER BY ID
+  // QUERY USER BY ID
   describe("GET user by id", function() {
     it("should be successful query [200]", function(done) {
       var user = factory.build("active_user");
@@ -79,11 +79,13 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //EDIT USER BY ID
+  // EDIT USER BY ID
   describe("PUT user by id", function() {
     it("should be successful user update [200]", function(done) {
       var user  = factory.build("edit_user");
       var query = "?first_name="+user.first_name+"&last_name="+user.last_name+"&email="+user.email+"&password="+user.password
+      console.log(query);
+      console.log("++++++\n");
       expect(user).to.exist;
 
       request.put("/user/"+user.id+query)
@@ -96,10 +98,10 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //EDIT POST BY ID (EXPECT ERROR)
+  // EDIT POST BY ID (EXPECT ERROR)
   describe("PUT user by id", function() {
     it("should be successful edit error [500]", function(done) {
-      var user  = factory.build("error_post");
+      var user  = factory.build("error_user");
       var query = "?first_name="+user.first_name+"&last_name="+user.last_name+"&email="+user.email+"&password="+user.password
       expect(user).to.exist;
 
@@ -107,14 +109,14 @@ describe(TEST_NAME, function() {
         .send(user)
         .expect(500)
         .end(function(err, res) {
-          console.log(res.status);
+          //console.log(res.status);
           expect(err).to.not.exist;
           done();
         });
     });
   });
 
-  //REGISTER
+  // REGISTRATION REDIRECT
   describe("GET register", function() {
     it("should respond to session redirect to dashboard [302]", function(done) {
       request.get("/register")
@@ -128,7 +130,7 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //LOGOUT
+  // LOGOUT
   describe("GET logout", function() {
     it("should be successful logout [302]", function(done) {
       request.get("/logout")
@@ -142,10 +144,10 @@ describe(TEST_NAME, function() {
     });
   });
 
-  //404 -- NON-EXISTING ROUTE
+  // 404 -- NON-EXISTING ROUTE
   describe("GET route error user", function() {
     it("should be successful errcatch [404]", function(done) {
-      request.get("/error_user")
+      request.get("/error_route")
       .expect(404)
       .end(function(err, res) {
          expect(err).to.not.exist;

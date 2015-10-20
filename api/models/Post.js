@@ -6,28 +6,32 @@
 */
 
 var Post = {
-  connection : "BlogMongodbServer",
-  schema     : true,
   tableName  : "posts",
   attributes : {
       uuid: {
         primaryKey: true,
         type:"string",
-        required:true
+        required:true,
       },
 
       title: {
         type:"string",
-        required: true
+        required: true,
       },
 
       userid : {
         type:"string",
-        required: true
+        required: true,
       },
-      
-      body   : "string",
-      author : "string",
+
+      body   : {
+        type: "string",
+        required: true,
+      },
+      author : {
+        type: "string",
+        required: true,
+      },
 
   }
 };
